@@ -15,7 +15,7 @@ function bubbleSort(arr) {
 	return arr;
 }
 /**
- * Selection sort
+ * Selection sort 选择排序
  * 
  **/
 function selectionSort(arr) {
@@ -61,57 +61,82 @@ function insertionSort(arr) {
  * 
  */
 function shellSort(arr) {
-    var len = arr.length,
-        temp,
-        gap = 1;
-    while(gap < len/3) {          //动态定义间隔序列
-        gap =gap*3+1;
-    }
-    for (gap; gap > 0; gap = Math.floor(gap/3)) {
-        for (var i = gap; i < len; i++) {
-            temp = arr[i];
-            for (var j = i-gap; j >= 0 && arr[j] > temp; j-=gap) {
-                arr[j+gap] = arr[j];
-            }
-			arr[j+gap] = temp;
+	var len = arr.length,
+		temp,
+		gap = 1;
+	while (gap < len / 3) { //动态定义间隔序列
+		gap = gap * 3 + 1;
+	}
+	for (gap; gap > 0; gap = Math.floor(gap / 3)) {
+		for (var i = gap; i < len; i++) {
+			temp = arr[i];
+			for (var j = i - gap; j >= 0 && arr[j] > temp; j -= gap) {
+				arr[j + gap] = arr[j];
+			}
+			arr[j + gap] = temp;
 			//在组内实行插入排序 然后不断减小间隔
-        }
-    }
-    return arr;
+		}
+	}
+	return arr;
 }
 
-function mergeSort(arr) {  //采用自上而下的递归方法
-    var len = arr.length;
-    if(len < 2) {
-        return arr;
-    }
-    var middle = Math.floor(len / 2),
-        left = arr.slice(0, middle),
-        right = arr.slice(middle);
-    return merge(mergeSort(left), mergeSort(right));
+function mergeSort(arr) { //采用自上而下的递归方法
+	var len = arr.length;
+	if (len < 2) {
+		return arr;
+	}
+	var middle = Math.floor(len / 2),
+		left = arr.slice(0, middle),
+		right = arr.slice(middle);
+	return merge(mergeSort(left), mergeSort(right));
 }
 /**
  * 归并排序 分而治之 需要额外的内存空间
  */
 
 
-function merge(left, right)
-{
-    var result = [];
- 
-    while (left.length && right.length) {
-        if (left[0] <= right[0]) {
-            result.push(left.shift());
-        } else {
-            result.push(right.shift());
-        }
-    }
- 
-    while (left.length)
-        result.push(left.shift());
- 
-    while (right.length)
-        result.push(right.shift());
- 
-    return result;
+function merge(left, right) {
+	var result = [];
+
+	while (left.length && right.length) {
+		if (left[0] <= right[0]) {
+			result.push(left.shift());
+		} else {
+			result.push(right.shift());
+		}
+	}
+
+	while (left.length)
+		result.push(left.shift());
+
+	while (right.length)
+		result.push(right.shift());
+
+	return result;
+}
+
+
+/**
+ * 快速排序 分而治之 需要额外的内存空间
+ */
+function quickSort(arr) {
+	function changeIndex(length) {
+		let newLength = Math.floor(length / 2);
+		return newLength;
+	}
+	if (arr.length < 1) {
+		return arr;
+	}
+	let middleIndex = Math.floor(arr.length / 2);
+	const left = [],
+		right = [];
+	for (let i = 0; i < arr.length; i++) {
+		if (arr[i] <= arr[middleIndex]) {
+			left.push(arr[i]);
+		} else {
+			right.push(arr[i]);
+		}
+		//middleIndex = changeIndex(middleIndex);
+	}
+	return quickSort(left).concat([arr[middleIndex + 1]], quickSort(right));
 }
