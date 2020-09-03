@@ -37,4 +37,4 @@ function fibo(n) {
 	return c;
 }
 
-console.log(fibo(39));
+console.log(fibo(4));

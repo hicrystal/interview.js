@@ -5,7 +5,7 @@ Function.prototype.bindNew= function(){
 	let arg = Array.prototype.slice.call(arguments, 1);
 	if(!self instanceof Function) throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
 	else{
-		var bindFn = function(){
+	var bindFn = function(){
 			// 这个时候的arguments是指bind返回的函数传入的参数,并把他们变成数组
 			var bindArgs = Array.prototype.slice.call(arguments);
 			return self.apply(target, arg.concat(bindArgs));
